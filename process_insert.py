@@ -26,9 +26,9 @@ def parse_complete_date(s):
 # This function receives a row from the dataframe
 def parse_location(s):
     lat = s["Y"]
-    long = s["X"]
+    lng = s["X"]
     location_dict = {
-        'coordinates': [long, lat],
+        'coordinates': [lng, lat],
         'type': 'point'
     }
     return location_dict
@@ -43,9 +43,9 @@ def import_content(file_path):
     # We start parsing the dataframe columns
     df["X"] = df["X"].apply(parse_float)  # We make sure the the fields X and Y are of type float
     df["Y"] = df["Y"].apply(parse_float)
-    print("Parsing date")
+    print("Parsing date...")
     df["Date"] = df.apply(parse_complete_date, axis=1)  # Axis=1 to interate over the rows applying parse_complete_date to each one
-    print("Parsing location")
+    print("Parsing location...")
     df["Location"] = df.apply(parse_location, axis=1) # Parse location into a well-formatted geojson file
     print("Inserting data into monogodb, might take some minutes, please be patient...")
     incid.insert_many(df.to_dict("records")) # Insert many python objects into the collection incidents
