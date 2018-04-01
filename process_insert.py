@@ -17,8 +17,8 @@ def parse_float(x):
 # This function receives a row of the dataframe and converts its date cell to a well formatted datetime object
 # using the column Date and Time.
 def parse_complete_date(s):
-    date = datetime.strptime(s["Date"], "%m/%d/%Y %H:%M:%S AM")
-    time = s["Time"]
+    date = datetime.strptime(s["Date"], "%m/%d/%Y")
+    time = s["Time"].split(":")
     date_time = date.replace(hour=int(time[0]), minute=int(time[1]))
     return date_time
 
@@ -36,8 +36,9 @@ def parse_location(s):
 
 def import_content(file_path):
     client = MongoClient()
-    db = client['san_francisco_dataset']  # Creates the database for the San Francisco city incidents data
+    db = client['san_francisco_incidents']  # Creates the database for the San Francisco city incidents data
     incid = db.incidents        # Creates the collection of the documents of that will represent the incidents
+    print("Reading csv file...")
     df = pd.read_csv(file_path)  # Reads the csv file into python's dataframe type (in my case I named it incid.csv)
     # We start parsing the dataframe columns
     df["X"] = df["X"].apply(parse_float)  # We make sure the the fields X and Y are of type float
@@ -52,5 +53,5 @@ def import_content(file_path):
 
 
 if __name__ == "__main__":
-    file_path = "~/incidents.csv"
+    file_path = "/Users/yasos/Downloads/incidents.csv"
     import_content(file_path)
