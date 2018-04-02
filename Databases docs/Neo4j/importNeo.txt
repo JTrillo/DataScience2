@@ -1,0 +1,26 @@
+CREATE INDEX ON :Category(category);
+
+LOAD CSV WITH HEADERS FROM "file:///C:\\PathTo\\Categories.csv" AS row
+CREATE (cat:Category {category: row.Category});
+
+CREATE INDEX ON :District(district);
+
+LOAD CSV WITH HEADERS FROM "file:///C:\\PathTo\\Districts.csv" AS row
+CREATE (dis:District {district: row.District});
+
+CREATE INDEX ON :Incident(incnum);
+
+USING PERIODIC COMMIT 5000
+LOAD CSV WITH HEADERS FROM "file:///C:\\PathTo\\Incidents.csv" AS row
+CREATE (inc:Incident {incnum: toInt(row.IncNum), dayofweek: row.DayOfWeek,
+timestamp: toInt(row.Timestamp), resolution: row.Resolution});
+
+USING PERIODIC COMMIT 5000
+LOAD CSV WITH HEADERS FROM "file:///C:\\PathTo\\IncToDistrict.csv" AS row
+MATCH (inc:Incident { incnum: toInt(row.IncNum)}), (dis:District { district: row.District})
+CREATE (inc)-[:WHERE]->(dis);
+
+USING PERIODIC COMMIT 5000
+LOAD CSV WITH HEADERS FROM "file:///C:\\PathTo\\IncToCategory.csv" AS row
+MATCH (inc:Incident { incnum: toInt(row.IncNum)}), (cat:Category { category: row.Category})
+CREATE (inc)-[:WHAT]->(cat);
