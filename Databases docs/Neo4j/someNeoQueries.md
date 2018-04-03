@@ -1,4 +1,4 @@
-# Some Neo4j Queries
+# Some Neo4j Queries 
 
 ## All districts
 `MATCH (dis:District) RETURN dis`

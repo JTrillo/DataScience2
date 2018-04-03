@@ -29,7 +29,7 @@ def parse_location(s):
     log = s["X"]
     location_dict = {
         'coordinates': [log, lat],
-        'type': 'point'
+        'type': 'Point'
     }
     return location_dict
 
