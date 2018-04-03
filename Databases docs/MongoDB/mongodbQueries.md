@@ -54,8 +54,8 @@ db.incidents.aggregate(
             _id : "$Category",
             total:{$sum: 1}
         }
-    }], 
-    {allowDiskUse: true})
+    }]
+)
 ```
 ### Obtener el total de incidencias en cada día de la semana usando Aggregate Framework
 ```
@@ -65,8 +65,8 @@ db.incidents.aggregate(
             _id : "$DayOfWeek",
             total:{$sum: 1}
         }
-    }], 
-    {allowDiskUse: true})
+    }]
+)
 ```
 ### Obtener las incidencias que han ocurrido a una distancia máxima de 1000 metros y una distancia mínima de 500 metros alrededor de las coordinadas (37.7813411,-122.4112952)
 ```
