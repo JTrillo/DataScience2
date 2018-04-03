@@ -66,3 +66,18 @@ SELECT COUNT(*) FROM incidencias.incidenciasbycategoriazona WHERE  Category='SUI
 SELECT * FROM incidencias.incidenciasbycategoriazona WHERE Category='SUICIDE' AND pddistrict='BAYVIEW';
 
 
+#numero de incidentes por categoria, distrito y fecha
+CREATE TABLE incidencias.incidenciasbycategoriazonafecha( 
+   Category text,
+   Descript text,
+   Date date,
+   Time time,
+   PdDistrict text,
+   Resolution text,
+   Location text,
+   PdId text,
+   PRIMARY KEY((Category,PdDistrict),date,PdId)
+)WITH CLUSTERING ORDER BY (date DESC, PdId ASC);
+
+COPY incidencias.incidenciasbycategoriazonafecha (Category,Descript,Date,Time,PdDistrict,Resolution,Location,PdId) FROM 'C:/Users/Ivan/Desktop/doccassandra/CSVs/incidenciasbycategoriazona.csv' WITH HEADER = TRUE;
+SELECT COUNT(*) FROM incidencias.incidenciasbycategoriazonafecha WHERE  Category='SUICIDE' AND pddistrict='BAYVIEW' AND date >= '2017-06-01' AND date <= '2018-08-01';
