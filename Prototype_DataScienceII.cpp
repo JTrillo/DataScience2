@@ -1,6 +1,6 @@
 //============================================================================
 // Name        : Prototype_DataScienceII.cpp
-// Author      : Joaquín Trillo Escribano
+// Author      : Grupo 6
 // Version     : 1.0
 // Copyright   : Your copyright notice
 // Description : C++ Prototype for Data Science II project

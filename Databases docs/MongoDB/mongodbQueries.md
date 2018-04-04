@@ -80,3 +80,20 @@ db.incidents.find({
     }
 })
 ```
+### Obtener el distrito de una incidencia con consultas geo-espatiales
+La siguiente consulta responde al siguiente requisito: dadas las coordinadas de un incidente, por ejemplo (-122.4112952, 37.7813411), obtener el poligono de la collección de "neighbours" que forma al distrito en que ha ocurrido el incidente.
+Para esta consulta, se usa el operador $geoIntersects que recibe como parámetro un punto en formato geo-json y realiza una búsqueda geo-espacial sobre el campo "the_geom" de la colleción "neighbours".
+```
+db.neighbours.findOne({
+    the_geom: {
+        $geoIntersects: {
+            $geometry: {
+                "type": "Point",
+                "coordinates": [-122.42158168136999, 37.7617007179518]
+            }
+        }
+    }
+})
+```
+
+
