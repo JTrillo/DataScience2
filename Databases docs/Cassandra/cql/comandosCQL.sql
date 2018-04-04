@@ -20,7 +20,7 @@ COPY incidencias.completoPdId (IncidntNum,Category,Descript,DayOfWeek,Date,Time,
 select COUNT(*) from incidencias.completoPdId;
 
 
-#ver actividad criminal por zonas de la ciudad
+#ver incidencias por zonas de la ciudad
 CREATE TABLE incidencias.incidenciasbyzona( 
    Category text,
    Descript text,
@@ -48,7 +48,7 @@ SELECT COUNT(*) FROM incidencias.categorias;
 SELECT * FROM incidencias.categorias;
 
 
-#numero de incidentes por categoria y distrito
+#ver incidencias por categoria y distrito
 CREATE TABLE incidencias.incidenciasbycategoriazona( 
    Category text,
    Descript text,
@@ -66,7 +66,7 @@ SELECT COUNT(*) FROM incidencias.incidenciasbycategoriazona WHERE  Category='SUI
 SELECT * FROM incidencias.incidenciasbycategoriazona WHERE Category='SUICIDE' AND pddistrict='BAYVIEW';
 
 
-#numero de incidentes por categoria, distrito y fecha
+#ver incidencias por categoria, distrito y fecha
 CREATE TABLE incidencias.incidenciasbycategoriazonafecha( 
    Category text,
    Descript text,
