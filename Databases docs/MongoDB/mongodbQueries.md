@@ -3,12 +3,13 @@ primero tenemos que usar la base de datos que nos interesa usando este comando:
 ```
 use san_francisco_incidents
 ```
-Antes de realizar las consultas vamos a crear algunos indíces que nos ayudarán a realizar consultas más optimas. Crearemos un indíce sobre los campos Category, DayOfWeek y PdDistrict. Crearemos además un indíce espacial sobre la columan Location para poder realizar consultas geoespaciales.
+Antes de realizar las consultas vamos a crear algunos indíces que nos ayudarán a realizar consultas más optimas. Crearemos un indíce sobre los campos Category, DayOfWeek y PdDistrict. El valor 1 en la función createIndex denota que queremos que sea incremental el orden. Crearemos además un indíce espacial sobre la clave Location para poder realizar consultas geoespaciales, y otro sobre el campo the_geom de la colección de distritos. Los índices geo-espaciales se definen pasando por parámetro el valor "2dsphere" para la clave que representa el campo sobre el que se va a crear el índice.
 ```
 db.incidents.createIndex( { category: 1 } )
 db.incidents.createIndex( { DayOfWeek: 1 } )
 db.incidents.createIndex( { PdDistrict: 1 } )
 db.incidents.createIndex( { location : "2dsphere" } )
+db.neighbours.createIndex( { the_geom : "2dsphere" } )
 ```
 ### Obtener todas las incidencias
 ```
