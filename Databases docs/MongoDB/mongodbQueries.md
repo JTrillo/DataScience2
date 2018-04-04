@@ -95,5 +95,25 @@ db.neighbours.findOne({
     }
 })
 ```
-
+### Obtener todas las incidencias que estén en un distrito usando consultas geo-espaciales
+La siguiente consulta, obtiene primero un distrito representado por un multipoligono (más información en https://tools.ietf.org/html/rfc7946#section-3.1.3) usando las coordinadas de un punto, que supongas son las de la incidencia de la consulta anterior. Luego usando ese multipoligono realiza una búsqueda geo-espacial en la que usa el operador $geoWithin, que como su nombre lo sugiere, devuelve los documentos de incidencias que sus coordinadas estén situadas dentro de ese poligono.
+```
+var neighborhood = db.neighbours.findOne({
+    the_geom: { 
+        $geoIntersects: {
+            $geometry: {
+                type: "Point",
+                coordinates: [-122.42158168136999, 37.7617007179518]
+            }
+        }
+    }
+})
+db.incidents.find({
+    Location: {
+        $geoWithin: { 
+            $geometry: neighborhood.the_geom 
+        }
+    }
+})
+```
 
