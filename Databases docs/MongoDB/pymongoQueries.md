@@ -96,7 +96,8 @@ db.neighbours.findOne({
     }
 })
 ```
-### Acceso a la base de datos desde python
+### Acceso a la base de datos desde python, y import de todos los paquetes necesarios
+En esta entrega no se van a detallar los pasos de volcado de datos desde python en mongodb, ya que se ha realizado en la entrega anterior.
 ```
 from pymongo import MongoClient, GEOSPHERE
 # La base de datos de incidentes se llama san_francisco_incidents
@@ -109,13 +110,48 @@ db.neighbours.create_index(("the_geom", GEOSPHERE)])
 ```
 ### Obtener todas las incidencias que estén en un distrito usando consultas geo-espaciales
 La siguiente consulta, obtiene primero un distrito representado por un multipoligono, usando las coordinadas de un punto. Luego usando ese multipoligono realiza una búsqueda geo-espacial en la que usa el operador $geoWithin, que como su nombre lo sugiere, devuelve los documentos de incidencias que sus coordinadas estén situadas dentro de ese poligono.
-El uso de objeto SON es necesario porque las 
+El uso de objeto SON es necesario para poder definir geometrías con más de un atributo, por ejemplo el punto tiene la clave type y la clave coordinates.
 ```
-from pymongo import MongoClient, GEOSPHERE
+from pymongo import MongoClient
 
-#Encontramos el distrito en el que está el punto
+# Montamos la query para encontrar el distrito en el que está el punto
 query_distrito = {"the_geom" : {"$geoIntersects": {"$geometry": SON([("type", "Point"), ("coordinates", [-122.42158168136999, 37.7617007179518])])}}}
-#Ahora realizamos la consulta a MongoDB
-distrito = db.incidents.
+# Realizamos la consulta a la colección de distritos en mongodb
+distrito = db.neighbours.find_one(query_distrito)
+# Montamos la query para encontrar todos los incidents que estáne en el distrito anterio
+query_incidents = {"Location": {"$geoWithin": {"$geometry": results['the_geom']}}}
+# Realizamos la consulta a la colección de incidentes en mongodb
+incidentes = {"Location": {"$geoWithin": {"$geometry": results['the_geom']}}}
 ```
+PrettyPandas(df.head())
+Address       Category                Date  DayOfWeek  \
+0     100 Block of 11TH ST  VEHICLE THEFT 2014-03-13 09:35:00   Thursday   
+1     100 Block of 11TH ST  VEHICLE THEFT 2013-02-16 22:00:00   Saturday   
+2  1000 Block of NATOMA ST  LARCENY/THEFT 2014-01-08 13:30:00  Wednesday   
+3  1000 Block of NATOMA ST       BURGLARY 2014-06-20 02:00:00     Friday   
+4  1000 Block of NATOMA ST       BURGLARY 2014-06-17 10:00:00    Tuesday   
+Descript  IncidntNum  \
+0                 STOLEN AUTOMOBILE   140214175   
+1                 STOLEN AUTOMOBILE   130138381   
+2           PETTY THEFT OF PROPERTY   146007314   
+3  BURGLARY OF FLAT, UNLAWFUL ENTRY   140511426   
+4          BURGLARY, UNLAWFUL ENTRY   146118472   
+Location PdDistrict  \
+0  {'coordinates': [-122.41588175991001, 37.77327...   SOUTHERN   
+1  {'coordinates': [-122.41588175991001, 37.77327...   SOUTHERN   
+2  {'coordinates': [-122.416569284944, 37.7732029...   SOUTHERN   
+3  {'coordinates': [-122.416569284944, 37.7732029...   SOUTHERN   
+4  {'coordinates': [-122.416569284944, 37.7732029...   SOUTHERN   
+PdId Resolution   Time           X          Y  \
+0  14021417507021       NONE  09:35 -122.415882  37.773278   
+1  13013838107021       NONE  22:00 -122.415882  37.773278   
+2  14600731406372       NONE  13:30 -122.416569  37.773203   
+3  14051142605023       NONE  02:00 -122.416569  37.773203   
+4  14611847205073       NONE  10:00 -122.416569  37.773203   
+_id  
+0  5ac1522f790de03ca665152a  
+1  5ac1523e790de03ca675155d  
+2  5ac1522f790de03ca664cc5e  
+3  5ac1522f790de03ca6656573  
+4  5ac1522f790de03ca6657190  
 
