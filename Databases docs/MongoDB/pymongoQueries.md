@@ -123,6 +123,7 @@ query_incidents = {"Location": {"$geoWithin": {"$geometry": results['the_geom']}
 # Realizamos la consulta a la colección de incidentes en mongodb
 incidentes = {"Location": {"$geoWithin": {"$geometry": results['the_geom']}}}
 ```
+```
 PrettyPandas(df.head())
 Address       Category                Date  DayOfWeek  \
 0     100 Block of 11TH ST  VEHICLE THEFT 2014-03-13 09:35:00   Thursday   
@@ -154,4 +155,4 @@ _id
 2  5ac1522f790de03ca664cc5e  
 3  5ac1522f790de03ca6656573  
 4  5ac1522f790de03ca6657190  
-
+```
