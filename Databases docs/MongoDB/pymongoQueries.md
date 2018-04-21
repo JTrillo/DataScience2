@@ -96,25 +96,26 @@ db.neighbours.findOne({
     }
 })
 ```
-### Obtener todas las incidencias que estén en un distrito usando consultas geo-espaciales
-La siguiente consulta, obtiene primero un distrito representado por un multipoligono (más información en https://tools.ietf.org/html/rfc7946#section-3.1.3) usando las coordinadas de un punto. Luego usando ese multipoligono realiza una búsqueda geo-espacial en la que usa el operador $geoWithin, que como su nombre lo sugiere, devuelve los documentos de incidencias que sus coordinadas estén situadas dentro de ese poligono.
+### Acceso a la base de datos desde python
 ```
-var neighborhood = db.neighbours.findOne({
-    the_geom: { 
-        $geoIntersects: {
-            $geometry: {
-                type: "Point",
-                coordinates: [-122.42158168136999, 37.7617007179518]
-            }
-        }
-    }
-})
-db.incidents.find({
-    Location: {
-        $geoWithin: { 
-            $geometry: neighborhood.the_geom 
-        }
-    }
-})
+from pymongo import MongoClient, GEOSPHERE
+# La base de datos de incidentes se llama san_francisco_incidents
+db = client()['san_francisco_incidents']
+```
+Para poder realizar las consultas siguientes crearemos varios indices sobre varios campos en la colección de incidencias y de distritos.
+```
+db.incidents.create_index([("Location", GEOSPHERE)]) #GEOSPHERE: para procesar coordinadas esféricas
+db.neighbours.create_index(("the_geom", GEOSPHERE)])
+```
+### Obtener todas las incidencias que estén en un distrito usando consultas geo-espaciales
+La siguiente consulta, obtiene primero un distrito representado por un multipoligono, usando las coordinadas de un punto. Luego usando ese multipoligono realiza una búsqueda geo-espacial en la que usa el operador $geoWithin, que como su nombre lo sugiere, devuelve los documentos de incidencias que sus coordinadas estén situadas dentro de ese poligono.
+El uso de objeto SON es necesario porque las 
+```
+from pymongo import MongoClient, GEOSPHERE
+
+#Encontramos el distrito en el que está el punto
+query_distrito = {"the_geom" : {"$geoIntersects": {"$geometry": SON([("type", "Point"), ("coordinates", [-122.42158168136999, 37.7617007179518])])}}}
+#Ahora realizamos la consulta a MongoDB
+distrito = db.incidents.
 ```
 
