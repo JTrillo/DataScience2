@@ -118,3 +118,16 @@ db.incidents.find({
 })
 ```
 
+
+db.incidents.aggregate([{
+ $project: {
+   _id: 1,
+   Category: 1,
+   Date: "$hour"
+ }
+ $group: {
+   _id: "$Date",
+   total: {$sum: 1}
+ }
+}])
+
