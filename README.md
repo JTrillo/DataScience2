@@ -6,4 +6,8 @@ El prototipo en C++ (**Prototype_DataScienceII.cpp**) lee las filas caracter a c
 * Casos de violencia doméstica no resueltos.
 * Automóviles robados en Franklin St / Turk St.
 
-## Las presentaciones de las bases de datos y de Machine Learning se encuentran en la carpeta 'Versión Final'
+### Las presentaciones de las bases de datos y de Machine Learning se encuentran en la carpeta 'Presentaciones'
+https://github.com/JTrillo/DataScience2/tree/master/Presentaciones
+
+### La memoria está en la raíz de este repositorio, 'MemoriaGrupo6.pdf'
+https://github.com/JTrillo/DataScience2/blob/master/MemoriaGrupo6.pdf
