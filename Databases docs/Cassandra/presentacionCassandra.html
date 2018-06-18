@@ -11783,6 +11783,146 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Conceptos-b&#225;sicos">Conceptos b&#225;sicos<a class="anchor-link" href="#Conceptos-b&#225;sicos">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>Base de datos tipo clave-valor y orientada a columnas</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>Pensado para cuando el almacenamiento es barato y podemos tener duplicado los datos.</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>Se crea una tabla por cada consulta</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Modelo-de-datos">Modelo de datos<a class="anchor-link" href="#Modelo-de-datos">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Keyspace: contenemos más exterior. Análoga a una base de datos en base de datos relacionales</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Familia de columnas: colleccion de filas, y cada fila es una colección de columnas. Análoga a una tabla en RDBMS</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Columna: Unidad básica de datos en Cassandra.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>CREATE TABLE incidencias.incidenciasbycategoriafecha( 
+   Category text,
+   Date date,
+   Time time,
+   PdId text,
+   PRIMARY KEY(Category,date,PdId)
+)WITH CLUSTERING ORDER BY (date DESC, PdId ASC);</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Clave-primaria">Clave primaria<a class="anchor-link" href="#Clave-primaria">&#182;</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>Clave partición: es la primera parte de la clave primaria. Responsable de distribuir los datos a lo largo de todos los nodos disponibles.</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>Clave compuesta: la clave primaria puede tener más de una coulmna. Solo la primera parte es la clave partición, el resto es clave clúster.</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>Clave clúster: segunda parte de la clave primaria. Sirve para ordenar los datos ascendentemente descendentemente.</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Ejemplo-pr&#225;ctico">Ejemplo pr&#225;ctico<a class="anchor-link" href="#Ejemplo-pr&#225;ctico">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Creaci&#243;n-keyspace-desde-la-consola-CQL">Creaci&#243;n keyspace desde la consola CQL<a class="anchor-link" href="#Creaci&#243;n-keyspace-desde-la-consola-CQL">&#182;</a></h3>
 </div>
 </div>
@@ -12052,7 +12192,7 @@ Primero vamos a proceder a la limpieza del fichero de datos</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">cassandra.cluster</span> <span class="k">import</span> <span class="n">Cluster</span>
@@ -12075,7 +12215,7 @@ Primero vamos a proceder a la limpieza del fichero de datos</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">cluster</span> <span class="o">=</span> <span class="n">Cluster</span><span class="p">([</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">])</span>
@@ -12098,7 +12238,7 @@ Primero vamos a proceder a la limpieza del fichero de datos</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In&nbsp;[40]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Número incidencias según el distrito&#39;</span>
@@ -12116,7 +12256,7 @@ Primero vamos a proceder a la limpieza del fichero de datos</p>
 	<span class="k">return</span> <span class="n">districts</span>
 
 
-<span class="c1">#Número incidencias según el distrito&#39;</span>
+<span class="c1">#Número incidencias según la categoria entre dos fechas&#39;</span>
 <span class="k">def</span> <span class="nf">get_num_incidents_by_category_betweenDate</span><span class="p">(</span><span class="n">category</span><span class="p">,</span><span class="n">start_date</span><span class="p">,</span><span class="n">end_date</span><span class="p">):</span>
 	<span class="n">num_incidents</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;SELECT COUNT(*) FROM incidencias.incidenciasbycategoriafecha WHERE Category=</span><span class="si">%s</span><span class="s1"> AND date &gt;= </span><span class="si">%s</span><span class="s1"> AND date &lt;= </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,[</span><span class="n">category</span><span class="p">,</span><span class="n">start_date</span><span class="p">,</span><span class="n">end_date</span><span class="p">])</span>
 	<span class="k">return</span> <span class="n">num_incidents</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">count</span>
